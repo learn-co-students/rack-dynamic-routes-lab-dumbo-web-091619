@@ -4,14 +4,15 @@ class Application
         resp = Rack::Response.new
         req = Rack::Request.new(env)
 
-        @@items = []
+        @@items = [Item.new("Figs", 3.42), Item.new("Pears", 0.99)]
 
         if !req.path.match(/items/)
             resp.write "Route not found"
             resp.status = 404
         else
             item_name = req.path.split("/items/").last
-            if item = @@items.find {|product| product.name == item_name}
+            item = @@items.find {|product| product.name == item_name}
+            if !item.nil?
                 resp.write item.price
                 resp.status = 200
             else
