@@ -11,8 +11,7 @@ class Application
             resp.status = 404
         else
             item_name = req.path.split("/items/").last
-            item = @@items.find {|product| product.name == item_name}
-            if !item.nil?
+            if item = @@items.find {|product| product.name == item_name}
                 resp.write item.price
                 resp.status = 200
             else
